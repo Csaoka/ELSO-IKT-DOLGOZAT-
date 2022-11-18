@@ -1,0 +1,67 @@
+R4
+
+ena
+clock set 12:00:00 15 nov 2022
+conf t
+host R4
+sec pass min-length 8
+login blovk-for 60 att 3 wit 120
+ena sec class123
+no ip domain-l
+line con 0
+pass cisco123
+login
+logg syn
+exec 5
+lin vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+banner motd "teszt"
+
+int g0/1.10
+enc dot 10
+ip add 192.168.180.1 255.255.255.0
+des vlan 10 atjaroja
+int g0/1.20
+enc dot 20
+ip add 192.168.170.1 255.255.255.0
+des vlan 20 atjaroja
+int g0/1.30
+enc dot 30
+ip add 192.168.110.1 255.255.255.0
+des vlan 30 atjaroja
+exit
+int g0/1 
+no sh 
+exit
+
+int g0/0.10
+enc dot vlan 10
+ip add 192.168.180.1 255.255.255.0
+des vlan 10 atjaroja
+int g0/1.20
+enc dot vlan 20
+ip add 192.168.170.1 255.255.255.0
+des vlan 20 atjaroja
+int g0/1.30
+enc dot vlan 30
+ip add 192.168.110.1 255.255.255.0
+des vlan 30 atjaroja
+exit
+int g0/1 
+no sh 
+exit
+
+int g0/1
+swit mode trunk
+swit trunk native vlan 99
+swit trunk allo vlan 10,20,30,99
+exit
+int g0/0
+swit mode trunk
+swit trunk native vlan 99
+swit trunk allo vlan 10,20,30,99
+exit
